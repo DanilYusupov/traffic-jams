@@ -1,0 +1,25 @@
+version: "3.8"
+
+# Created web network manually using docker command
+networks:
+  web:
+    external: true
+    driver: bridge
+
+services:
+  chrome:
+    image: selenium/standalone-chrome:96.0
+    hostname: chrome
+    networks:
+      - web
+    privileged: true
+    shm_size: 2g
+
+  api:
+    image: iusupov/traffic-jam:0.0.8
+    ports:
+      - "8080:8080"
+    networks:
+      - web
+    depends_on:
+      - chrome
