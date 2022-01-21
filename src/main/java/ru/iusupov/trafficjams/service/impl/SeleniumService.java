@@ -61,7 +61,7 @@ public class SeleniumService implements TrafficJamService {
         try {
             WebDriver driver = initializeDriverFromClasspath();
             driver.get("https://www.google.com");
-            driver.quit();
+            driver.close();
             log.info("System is ready.");
         } catch (IOException e) {
             log.error("System is not ready to work: {}", e.getMessage());

@@ -13,4 +13,5 @@ public class Properties {
     private String driverUrl;
     private String url;
     private String cssClass;
+    private String token;
 }

@@ -2,3 +2,4 @@ traffic:
   driver_url: /driver/macos/chromedriver
   url: https://yandex.ru/maps/43/kazan/?l=trf%2Ctrfe&ll=49.108795%2C55.796289&utm_source=main_stripe_big&z=12
   css_class: traffic-raw-icon__text
+  token: token
