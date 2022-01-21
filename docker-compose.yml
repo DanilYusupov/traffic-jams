@@ -16,7 +16,7 @@ services:
     shm_size: 2g
 
   api:
-    image: iusupov/traffic-jam:1.0.0
+    image: iusupov/traffic-jam:1.1.0
     ports:
       - "8080:8080"
     networks:
