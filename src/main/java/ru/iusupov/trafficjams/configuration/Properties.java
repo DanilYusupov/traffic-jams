@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 public class Properties {
+    private String driverUrl;
     private String url;
     private String cssClass;
 }

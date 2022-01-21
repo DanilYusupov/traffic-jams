@@ -8,4 +8,9 @@ public interface TrafficJamService {
      */
     int getValue();
 
+    /**
+     * Checks if all necessary stuff is working for performing {@link #getValue()} method
+     */
+    void systemCheck();
+
 }

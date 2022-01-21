@@ -16,10 +16,14 @@ services:
     shm_size: 2g
 
   api:
-    image: iusupov/traffic-jam:0.0.8
+    image: iusupov/traffic-jam:1.0.0
     ports:
       - "8080:8080"
     networks:
       - web
     depends_on:
       - chrome
+#   You can override properties from application.yaml file here
+#    environment:
+#      TRAFFIC_URL: https://yandex.ru/maps/213/moscow/?l=trf%2Ctrfe&ll=37.659710%2C55.741284&utm_source=main_stripe_big&z=11.94
+#      TRAFFIC_CSS_CLASS: traffic-raw-icon__text

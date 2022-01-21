@@ -39,12 +39,7 @@ public class SeleniumService implements TrafficJamService {
         WebDriver driver = initializeDriverFromClasspath();
         try {
             driver.get(properties.getUrl());
-            WebElement trafficJamElement = new WebDriverWait(driver, 15).until(new Function<WebDriver, WebElement>() {
-                @Override
-                public WebElement apply(WebDriver webDriver) {
-                    return driver.findElement(By.className(properties.getCssClass()));
-                }
-            });
+            WebElement trafficJamElement = new WebDriverWait(driver, 15).until(webDriver -> driver.findElement(By.className(properties.getCssClass())));
             if (trafficJamElement.isDisplayed()) {
                 String value = trafficJamElement.getText();
                 log.info("Received traffic jam value {}", value);
@@ -61,20 +56,23 @@ public class SeleniumService implements TrafficJamService {
         }
     }
 
+    @Override
+    public void systemCheck() {
+        try {
+            WebDriver driver = initializeDriverFromClasspath();
+            driver.get("https://www.google.com");
+            driver.quit();
+            log.info("System is ready.");
+        } catch (IOException e) {
+            log.error("System is not ready to work: {}", e.getMessage());
+        }
+    }
+
     WebDriver initializeDriverFromClasspath() throws IOException {
         if (Arrays.asList(env.getActiveProfiles()).contains("prod")) {
-            String pathToDriver = "/usr/src/trafficjam/chromedriver";
-            log.info("PROD env, switching to path: {}", pathToDriver);
-            return new RemoteWebDriver(new URL("http://chrome:4444/wd/hub"), new ChromeOptions());
+            return new RemoteWebDriver(new URL(properties.getDriverUrl()), new ChromeOptions());
         } else {
-            String osName = System.getProperty("os.name");
-            log.info("Using web driver for Linux OS");
-            String path = "/driver/linux/chromedriver";
-            if (osName.contains("Mac")) {
-                path = "/driver/macos/chromedriver";
-                log.warn("Changed to MacOS web driver");
-            }
-            String pathToDriver = new ClassPathResource(path).getFile().getPath();
+            String pathToDriver = new ClassPathResource(properties.getDriverUrl()).getFile().getPath();
             log.info("Creating path to driver: {}", pathToDriver);
             System.setProperty("webdriver.chrome.driver", pathToDriver);
             return new ChromeDriver();

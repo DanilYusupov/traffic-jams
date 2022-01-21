@@ -1,9 +1,7 @@
 FROM openjdk:11-jre
 
 ARG JAR_FILE=target/*.jar
-ARG DRIVER=src/main/resources/driver/linux/chromedriver
 COPY ${JAR_FILE} /usr/src/trafficjam/app.jar
-COPY ${DRIVER} /usr/src/trafficjam/chromedriver
 
 ENV SPRING_PROFILES_ACTIVE=prod
 WORKDIR /usr/src/trafficjam/
